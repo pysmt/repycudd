@@ -105,8 +105,8 @@ HDR = $(MOD).h docstring.h
 	$(CCPLUS) $(FLAGS) $(INCLUDES) -c $<
 
 all: $(OBJ) $(HDR)
-	$(MAKE) -C $(CUDD) -f Makefile
-	$(MAKE) -C $(CUDD) -f Makefile libso
+	$(MAKE) -C $(CUDD) -f Makefile_64bit
+	$(MAKE) -C $(CUDD) -f Makefile_64bit libso
 	$(CCPLUS) -shared $(OBJ) $(LFLAGS) -o _$(MOD).so $(LDFLAGS);
 
 ##
