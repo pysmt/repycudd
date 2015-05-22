@@ -6,4 +6,7 @@
 /////////////////////////////////////////////////
 
 %{
+extern DdNode ***glob_conj;
+extern DdNode **node_iter;
+extern int **cube_iter;
 %}
