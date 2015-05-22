@@ -14,18 +14,6 @@ struct DdNode { };
 %extend DdNode {
 %feature("autodoc","1");
 %pythoncode %{
-def __iter__(self):
-  global iter_meth, cudd_version
-  if iter_meth == 0:
-    return ForeachCubeIterator(self)
-  elif iter_meth == 1:
-    return ForeachNodeIterator(self)
-  elif iter_meth == 2:
-    if cudd_version < 0x020400:
-      print "Cannot iterate over primes with CUDD < 2.4.0"
-      raise RuntimeError
-    npair = NodePair(self,self)
-    return ForeachPrimeIterator(npair)
 def __deepcopy__(self,memo):
   return self
 __doc__ = "This class wraps around the basic DdNode. The methods defined by this class take the default manager as their DdManager option (if needed) and provide themselves as the first DdNode option that those functions require, as indicated by the self argument. These functions may be found in ddnode.i."

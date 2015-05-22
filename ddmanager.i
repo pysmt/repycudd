@@ -153,7 +153,9 @@ struct DdManager { };
 #endif
     int retval = Cudd_CheckZeroRef(self);
     if (!retval) {
-      cerr << "Quitting manager" << endl;
+#ifdef PYCUDD_DEBUG
+cerr << "Quitting manager" << endl;
+#endif
     } else {
 #ifdef PYCUDD_DEBUG
       cerr << retval << " unexpected non-zero reference counts" << endl;

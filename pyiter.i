@@ -36,32 +36,33 @@ def set_iter_meth(meth,verbose = False):
   iter_meth = meth
 
 class ForeachCubeIterator:
-    def __init__(self,Dd):
-        self.gen = DdGen(Dd,iter_meth)
+    def __init__(self,mgr,Dd):
+        self.gen = DdGen(mgr,Dd,iter_meth)
         self.node = Dd
         self.done = 0
-        self.ret_val = Dd.FirstCube(self.gen)
+        self.mgr = mgr
+        self.ret_val = Dd.FirstCube(self.gen,self.mgr)
         if not self.ret_val[0]: self.done = 1
-        
+
     def __iter__(self):
         return self
 
     def next(self):
         if self.done: raise StopIteration
         to_ret = self.ret_val[1:]
-        self.ret_val = self.node.NextCube(self.gen)
+        self.ret_val = self.node.NextCube(self.gen,self.mgr)
         if not self.ret_val[0]:
 	    self.done = 1
         return to_ret
 
 class ForeachNodeIterator:
-    def __init__(self,Dd):
-        self.gen = DdGen(Dd,iter_meth)
+    def __init__(self,mgr,Dd):
+        self.gen = DdGen(mrg,Dd,iter_meth)
         self.node = Dd
         self.done = 0
         self.ret_val = Dd.FirstNode(self.gen)
         if not self.ret_val[0]: self.done = 1
-        
+
     def __iter__(self):
         return self
 
@@ -74,12 +75,12 @@ class ForeachNodeIterator:
         return to_ret
 
 class ForeachPrimeIterator:
-    def __init__(self,npair):
+    def __init__(self,mgr,npair):
         global cudd_version
         if cudd_version < 0x020400:
             print "CUDD versions < 2.4.0 do not support iteration over primes"
             raise RuntimeError
-        self.gen = DdGen(npair.LOWER(), iter_meth, npair.UPPER())
+        self.gen = DdGen(mgr,npair.LOWER(), iter_meth, npair.UPPER())
         self.npair = npair
         self.done = 0
         self.ret_val = npair.FirstPrime(self.gen)
