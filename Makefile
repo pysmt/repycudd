@@ -17,7 +17,8 @@ MOD = repycudd
 ## Change these to reflect local settings
 ##
 #######
-CUDD        := ./cudd-2.4.2/
+TOP         := $(shell pwd)
+CUDD        := $(TOP)/cudd-2.4.2/
 CUDDVER     = 0x020400
 PYTHON_LOC  := /usr
 # Change the following to lib64 for 64-bit architectures

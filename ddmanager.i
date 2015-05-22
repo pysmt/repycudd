@@ -222,6 +222,15 @@ struct DdManager { };
   %exception;
   /* End wrapped by Aravind */
 
+  bool __eq__(DdManager* other) {
+    return self == other ? TRUE : FALSE;
+  }
+
+  bool __ne__(DdManager* other) {
+    return self != other ? TRUE : FALSE;
+  }
+
+
 %newobject addNewVar;  DdNode *  addNewVar() { DdNode* result = Cudd_addNewVar(self); Cudd_Ref(result); return result; }
 %newobject addNewVarAtLevel;  DdNode *  addNewVarAtLevel( int level) { DdNode* result = Cudd_addNewVarAtLevel(self,  level); Cudd_Ref(result); return result; }
 %newobject NewVar;  DdNode *  NewVar() { DdNode* result = Cudd_bddNewVar(self); Cudd_Ref(result); return result; }
