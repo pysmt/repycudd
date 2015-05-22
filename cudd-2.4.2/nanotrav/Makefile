@@ -96,3 +96,5 @@ clean:
 
 distclean: clean
 	rm -f $(TARGET) $(TARGETu) *.bak *~ .gdb_history *.qv *.qx
+
+libso:
