@@ -7,17 +7,12 @@
 using std::cerr;
 using std::endl;
 
-DdManager* mgr = NULL;
 DdNode **node_iter = (DdNode **) malloc(sizeof(DdNode *));
 int **cube_iter = (int **) malloc(sizeof(int *));
 DdNode ***glob_conj = (DdNode ***) malloc(sizeof(DdNode **));
 
 IntArray::IntArray(int size) {
-
-  if (size < 0)
-    sz = Cudd_ReadSize(mgr);
-  else
-    sz = size;
+  sz = size;
   vec = new int[sz];
   memset( vec, 0, sz * sizeof(int));
 }
@@ -72,11 +67,7 @@ int StrCompareFunc(const void *s, const void *t) {
 }
 
 DoubleArray::DoubleArray(int size) {
-
-  if (size < 0)
-    sz = Cudd_ReadSize(mgr);
-  else
-    sz = size;
+  sz = size;
   vec = new double[sz];
   for(int j=0; j<sz; j++)
     vec[j] = 0;
@@ -86,7 +77,8 @@ DoubleArray::~DoubleArray() {
   delete [] vec;
 }
 
-DdArray::DdArray(int size) {
+DdArray::DdArray(DdManager* ddman, int size) {
+  mgr = ddman;
 
 #ifdef PYCUDD_DEBUG
   cerr << endl << "Constructor for DdArray called" << endl;

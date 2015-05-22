@@ -25,7 +25,7 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
     result = PyTuple_New(sz+1);
     PyTuple_SetItem(result,0,o2);
     for (i=0;i<sz;i++) PyTuple_SetItem(result,i+1,PyInt_FromLong((*src)[i]));
-    // Note that DdGen will free the memory allocated for the int array 
+    // Note that DdGen will free the memory allocated for the int array
   }
   else {
     result = PyTuple_New(1);
@@ -40,7 +40,7 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 // Typemaps dum_sup and dum_cube both use the variable
 // int **cube_iter, defined in pycudd.cpp
 //
-/////////////////////////////////////////////////// 
+///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 //
 // dum_sup is used to return arrays of ints where
@@ -50,16 +50,16 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 //
 ///////////////////////////////////////////////////
 
-%typemap(argout) int **dum_sup {
+%typemap(argout) (DdManager* mgr, int **dum_sup) {
 
 #ifdef PYCUDD_DEBUG
   using_map("dum_sup")
 #endif
 
-  int sz = Cudd_ReadSize(mgr);
+  int sz = Cudd_ReadSize($1);
   int chk = (int) PyInt_AsLong($result);
-  $result = array_to_tuple($result, $1, sz);
-  if (chk) FREE(*$1);
+  $result = array_to_tuple($result, $2, sz);
+  if (chk) FREE(*$2);
 }
 
 %typemap(in,numinputs=0) int **dum_sup {
@@ -68,7 +68,7 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 
 ///////////////////////////////////////////////////
 //
-// dum_cube is used to return arrays of ints where the 
+// dum_cube is used to return arrays of ints where the
 // array is freed by other means.
 // Used by     : DdNode.FirstCube, DdNode.NextCube, DdNode.FirstPrime, DdNode.NextPrime
 //               In all the above cases, the call to Cudd_GenFree at the end of
@@ -77,14 +77,14 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 //
 ///////////////////////////////////////////////////
 
-%typemap(argout) int **dum_cube {
+%typemap(argout) (DdManager* mgr, int **dum_cube) {
 
 #ifdef PYCUDD_DEBUG
   using_map("dum_cube")
 #endif
 
-  int sz = Cudd_ReadSize(mgr);
-  $result = array_to_tuple($result, $1, sz);
+  int sz = Cudd_ReadSize($1);
+  $result = array_to_tuple($result, $2, sz);
 }
 
 %typemap(in,numinputs=0) int **dum_cube {
@@ -92,9 +92,9 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 }
 
 ///////////////////////////////////////////////////
-// 
-// dum_y is used to return a single DdNode *, given a 
-// DdNode **. 
+//
+// dum_y is used to return a single DdNode *, given a
+// DdNode **.
 // Note: We have to ref the node we return!
 // Used by     : DdNode.FirstNode, DdNode.NextNode
 // Uses global : DdNode **node_iter, defined in pycudd.cpp
@@ -164,4 +164,3 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 %typemap(in,numinputs=0) DdNode ***dum_juncts {
   $1 = glob_conj;
 }
-

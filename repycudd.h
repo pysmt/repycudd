@@ -5,7 +5,6 @@
 #include "cudd.h"
 #include "cuddInt.h"
 #include "dddmp.h"
-extern DdManager* mgr;
 
 #ifdef SWIG
 %feature("autodoc","1");
@@ -22,7 +21,7 @@ class IntArray {
 
  public:
   int* vec;
-  IntArray(int size);  
+  IntArray(int size);
   ~IntArray();
   void AssignVect( int *str, int size);
   void AssignComplVect( int *str, int size, int univ);
@@ -39,13 +38,13 @@ class IntArray {
   }
 }
 #endif
-  int __getitem__(int j) { 
+  int __getitem__(int j) {
     if (j<sz && j>=0) return vec[j];
-    throw RangeError(); 
+    throw RangeError();
   };
-  void __setitem__(int j, int val) { 
+  void __setitem__(int j, int val) {
     if (j<sz && j>=0) vec[j]=val;
-    else throw RangeError(); 
+    else throw RangeError();
   };
   int __len__() { return sz; }
   void Assign( int *list, int k) {
@@ -71,7 +70,7 @@ class StringArray {
 
  public:
   char** vec;
-  StringArray(int size);  
+  StringArray(int size);
   ~StringArray();
   char ***ArrayAddress() { return &vec; }
 
@@ -87,13 +86,13 @@ class StringArray {
 }
 #endif
 
-  char * __getitem__(int j) { 
-    if (j<sz && j>=0) return vec[j]; 
-    throw RangeError(); 
+  char * __getitem__(int j) {
+    if (j<sz && j>=0) return vec[j];
+    throw RangeError();
   };
   void __setitem__(int j, char *val) {
     if (j<sz && j>=0) vec[j]=val;
-    else throw RangeError(); 
+    else throw RangeError();
   };
   int __len__() { return sz; }
   void Assign( char **list, int k) {
@@ -135,13 +134,13 @@ class DoubleArray {
 }
 #endif
 
-  double __getitem__(int j) { 
-    if (j<sz && j>=0) return vec[j]; 
-    throw RangeError(); 
+  double __getitem__(int j) {
+    if (j<sz && j>=0) return vec[j];
+    throw RangeError();
   };
-  void __setitem__(int j, double  val) { 
+  void __setitem__(int j, double  val) {
     if (j<sz && j>=0) vec[j]=val;
-    else throw RangeError(); 
+    else throw RangeError();
   };
   void Assign( double *list, int k) {
     if (k > sz) throw RangeError();
@@ -174,7 +173,8 @@ __doc__ = "This class provides an array of DdNodes. This is an addition to the C
 public:
   int sz;
   DdNode** vec;
-  DdArray(int size);
+  DdManager* mgr;
+  DdArray(DdManager* ddman, int size);
   ~DdArray();
 
 #ifdef SWIG
@@ -191,15 +191,15 @@ public:
 
   DdNode* __getitem__(int j) {
     DdNode* result = NULL;
-    if (j<sz && j>=0) { 
+    if (j<sz && j>=0) {
       result = vec[j];
       Cudd_Ref(result);
     }
     else throw RangeError();
     return result;
   };
-  void __setitem__(int j, DdNode* val) { 
-    if (j<sz && j>=0) { 
+  void __setitem__(int j, DdNode* val) {
+    if (j<sz && j>=0) {
       if (vec[j]!=NULL) Cudd_RecursiveDeref(mgr,vec[j]);
       vec[j]=val;
       Cudd_Ref(vec[j]);
@@ -242,17 +242,17 @@ public:
   DdNode* VectorSupport();
   int VectorSupportIndex(int **dum_sup);
   DdNode* PickOneMinterm( DdNode* term );
-  DdNode* HoldTR( DdArray* other );  
+  DdNode* HoldTR( DdArray* other );
   int Find( DdNode* term);
   int Save( char* filename );
   int SaveText( char* filename );
   int Load( char* filename );
   int LoadText( char* filename );
-  int ArrayLoad( int rootmatchmode, StringArray *rootmatchnames, int varmatchmode, 
-		 StringArray *varmatchnames, IntArray *varmatchauxids, IntArray *varcomposeids, 
+  int ArrayLoad( int rootmatchmode, StringArray *rootmatchnames, int varmatchmode,
+		 StringArray *varmatchnames, IntArray *varmatchauxids, IntArray *varcomposeids,
 		 int mode, char *filename, FILE *fp=NULL);
-  int ArrayStore( char *ddname, StringArray *rootnames, StringArray *varnames, IntArray *auxids, 
+  int ArrayStore( char *ddname, StringArray *rootnames, StringArray *varnames, IntArray *auxids,
 		  int mode, int varinfo, char *filename, FILE *fp=NULL);
 };
-  
+
 #endif // PYCUDD_H
