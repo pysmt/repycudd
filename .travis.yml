@@ -1,0 +1,36 @@
+language: python
+
+sudo: false
+
+addons:
+  apt:
+    packages:
+    - python-setuptools
+    - python-nose
+    - python-pip
+    - python-dev
+    - make
+    - build-essential
+    - swig
+    - libgmp-dev
+    - autoconf
+    - libtool
+    - wget
+    - curl
+    - libboost-dev
+    - python3-all-dev
+
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+
+install:
+  - "export PYTHON_INCL=`python${TRAVIS_PYTHON_VERSION}-config --includes`"
+  - if [ "${TRAVIS_PYTHON_VERSION}" == "3.5" ]; then export PYTHON_INCL=`/opt/python/3.5.0/bin/python3.5-config --includes`; fi
+  - "make -f Makefile_64bit PYTHON_INCL=${PYTHON_INCL}"
+
+script:
+  - "export PYTHONPATH=`pwd`"
+  - "echo ${PYTHONPATH}"
+  - "python examples/example1.py"

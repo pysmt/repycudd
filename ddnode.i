@@ -146,8 +146,8 @@ struct NodePair { };
 def __iter__(self):
   global iter_meth
   if iter_meth != 2:
-    print "Can only enumerate primes for a NodePair. Setting iter_meth == 2 and proceeding"
-    iter_meth == 2
+    print("Can only enumerate primes for a NodePair. Setting iter_meth == 2 and proceeding")
+    iter_meth = 2
   return ForeachPrimeIterator(self)
 __doc__="This is used to provide the functionality of prime enumeration in CUDD 2.4.0. Create the NodePair by passing the DdNodes for lower and upper to the constructor. Once that is done, you can iterate over the primes of the NodePair using the Python for statement. There is no need to do this if you are interested in the primes of a simple DdNode -- the package automatically creates the NodePair and destroys it in that case."
 

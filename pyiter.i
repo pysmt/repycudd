@@ -32,7 +32,7 @@ def set_iter_meth(meth,verbose = False):
   global iter_meth
   methods = ["cubes", "nodes", "primes"]
   if verbose:
-      print "Setting iter method to iterate over ",methods[meth]
+     print("Setting iter method to iterate over %s", methods[meth])
   iter_meth = meth
 
 class ForeachCubeIterator:
@@ -52,7 +52,7 @@ class ForeachCubeIterator:
         to_ret = self.ret_val[1:]
         self.ret_val = self.node.NextCube(self.gen,self.mgr)
         if not self.ret_val[0]:
-	    self.done = 1
+          self.done = 1
         return to_ret
 
 class ForeachNodeIterator:
@@ -78,7 +78,7 @@ class ForeachPrimeIterator:
     def __init__(self,mgr,npair):
         global cudd_version
         if cudd_version < 0x020400:
-            print "CUDD versions < 2.4.0 do not support iteration over primes"
+            print("CUDD versions < 2.4.0 do not support iteration over primes")
             raise RuntimeError
         self.gen = DdGen(mgr,npair.LOWER(), iter_meth, npair.UPPER())
         self.npair = npair
@@ -92,7 +92,7 @@ class ForeachPrimeIterator:
         if self.done: raise StopIteration
         to_ret = self.ret_val[1:]
         self.ret_val = self.npair.NextPrime(self.gen)
-	if not self.ret_val[0]:
+        if not self.ret_val[0]:
             self.done = 1
         return to_ret
 
