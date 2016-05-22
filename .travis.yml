@@ -27,6 +27,8 @@ python:
 
 install:
   - "export PYTHON_INCL=`python${TRAVIS_PYTHON_VERSION}-config --includes`"
+  # For some reason, Travis CI cannot find the commant python3.5-config.
+  # Therefore, we force the path here
   - if [ "${TRAVIS_PYTHON_VERSION}" == "3.5" ]; then export PYTHON_INCL=`/opt/python/3.5.0/bin/python3.5-config --includes`; fi
   - "make -f Makefile_64bit PYTHON_INCL=${PYTHON_INCL}"
 
@@ -34,3 +36,5 @@ script:
   - "export PYTHONPATH=`pwd`"
   - "echo ${PYTHONPATH}"
   - "python examples/example1.py"
+  - "python examples/example2.py"
+  - "python examples/example3.py"

@@ -47,17 +47,18 @@ class ForeachCubeIterator:
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.done: raise StopIteration
         to_ret = self.ret_val[1:]
         self.ret_val = self.node.NextCube(self.gen,self.mgr)
         if not self.ret_val[0]:
           self.done = 1
         return to_ret
+    next = __next__ # Python 2.7
 
 class ForeachNodeIterator:
     def __init__(self,mgr,Dd):
-        self.gen = DdGen(mrg,Dd,iter_meth)
+        self.gen = DdGen(mgr,Dd,iter_meth)
         self.node = Dd
         self.done = 0
         self.ret_val = Dd.FirstNode(self.gen)
@@ -66,13 +67,14 @@ class ForeachNodeIterator:
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.done: raise StopIteration
         to_ret = self.ret_val[1]
         self.ret_val = self.node.NextNode(self.gen)
         if not self.ret_val[0]:
             self.done = 1
         return to_ret
+    next = __next__ # Python 2.7
 
 class ForeachPrimeIterator:
     def __init__(self,mgr,npair):
@@ -88,13 +90,14 @@ class ForeachPrimeIterator:
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.done: raise StopIteration
         to_ret = self.ret_val[1:]
         self.ret_val = self.npair.NextPrime(self.gen)
         if not self.ret_val[0]:
             self.done = 1
         return to_ret
+    next = __next__ # Python 2.7
 
 def cube_tuple_to_str(cube_tup):
     res = ""
