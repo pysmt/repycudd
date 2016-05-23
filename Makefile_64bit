@@ -24,7 +24,7 @@ PYTHON_LOC  := /usr
 # Change the following to lib64 for 64-bit architectures
 LIB_DIR     := lib
 #PYTHON_LOC  := /usr
-PYTHON_VER  := python2.7
+PYTHON_VER  := python2.7 # Set this from command line for 2.6 or 3.4
 SWIG	    := /usr/bin/swig
 CCPLUS      := g++
 
