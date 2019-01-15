@@ -25,7 +25,7 @@ PYTHON_LOC  := /usr
 LIB_DIR     := lib
 #PYTHON_LOC  := /usr
 PYTHON_VER  := python2.7
-SWIG	    := /usr/bin/swig
+SWIG	    := swig
 CCPLUS      := g++
 
 ##
