@@ -694,6 +694,18 @@ cerr << "Quitting manager" << endl;
     return retval;
   }
 
+  int DumpDotArray(DdArray *array, const char* fname) {
+    FILE *dfp = NULL;
+    int retval;
+
+    dfp = fopen(fname, "w");
+
+    retval = Cudd_DumpDot(self,1,array->vec,NULL,NULL,dfp);
+
+    fclose(dfp);
+    return retval;
+  }
+
   int DumpBlif(DdNode *this_node) {
 
     FILE *dfp = NULL;
