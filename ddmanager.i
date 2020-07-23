@@ -700,7 +700,7 @@ cerr << "Quitting manager" << endl;
 
     dfp = fopen(fname, "w");
 
-    retval = Cudd_DumpDot(self,1,array->vec,NULL,NULL,dfp);
+    retval = Cudd_DumpDot(self,array->sz,array->vec,NULL,NULL,dfp);
 
     fclose(dfp);
     return retval;
