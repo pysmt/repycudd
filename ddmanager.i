@@ -206,7 +206,7 @@ cerr << "Quitting manager" << endl;
   int __len__() { return Cudd_ReadSize(self); }
 %exception{
     try {
-      $function
+      $action
     } catch (CuddFatalError x) {
       PyErr_SetString(PyExc_RuntimeError,x.er.c_str());
       return NULL;
