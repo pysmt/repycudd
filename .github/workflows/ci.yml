@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # "system" is the runner image's own python3: a canary for image drift.
+        # "3.12" is pinned, so a green run always means the same thing.
+        python: [system, '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        if: matrix.python != 'system'
+        with:
+          python-version: ${{ matrix.python }}
+
+      - run: sudo apt-get update && sudo apt-get install -y swig python3-dev
+
+      # Same invocation as pysmt's installer (pysmt/cmd/installers/bdd.py), so
+      # a green build here means pysmt can build it too.
+      - name: Build
+        run: |
+          make -f Makefile_64bit \
+            PYTHON_INCL=-I$(python3 -c 'import sysconfig; print(sysconfig.get_path("include"))') \
+            SWIG=swig
+
+      # pysmt does not import from the build tree: it moves repycudd.py and
+      # _repycudd.so elsewhere and imports them from there. Test that path,
+      # since it is the one that breaks silently (the .so keeps an absolute
+      # -rpath into cudd-2.4.2/lib).
+      - name: Test relocated bindings
+        run: |
+          mkdir -p "$RUNNER_TEMP/bindings"
+          cp repycudd.py _repycudd.so "$RUNNER_TEMP/bindings/"
+          cd "$RUNNER_TEMP"
+          export PYTHONPATH="$RUNNER_TEMP/bindings"
+          python3 "$GITHUB_WORKSPACE/test_smoke.py"
+          python3 "$GITHUB_WORKSPACE/examples/example1.py"
+          python3 "$GITHUB_WORKSPACE/examples/example2.py"

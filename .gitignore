@@ -1,0 +1,9 @@
+*.o
+*.a
+*.so
+*.pyc
+__pycache__/
+docstring.h
+repycudd.py
+repycudd_wrap.cpp
+cudd-2.4.2/nanotrav/nanotrav
