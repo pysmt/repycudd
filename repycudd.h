@@ -30,7 +30,7 @@ class IntArray {
 #ifdef SWIG
 %exception {
   try {
-    $function
+    $action
   }
   catch (RangeError x) {
     PyErr_SetString(PyExc_IndexError,"index out-of-bounds");
@@ -77,7 +77,7 @@ class StringArray {
 #ifdef SWIG
 %exception {
   try {
-    $function
+    $action
   }
   catch (RangeError x) {
     PyErr_SetString(PyExc_IndexError,"index out-of-bounds");
@@ -125,7 +125,7 @@ class DoubleArray {
 #ifdef SWIG
 %exception {
   try {
-    $function
+    $action
   }
   catch (RangeError x) {
     PyErr_SetString(PyExc_IndexError,"index out-of-bounds");
@@ -180,7 +180,7 @@ public:
 #ifdef SWIG
 %exception {
   try {
-    $function
+    $action
   }
   catch (RangeError x) {
     PyErr_SetString(PyExc_IndexError,"index out-of-bounds");
