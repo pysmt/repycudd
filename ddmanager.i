@@ -225,11 +225,11 @@ cerr << "Quitting manager" << endl;
   /* End wrapped by Aravind */
 
   bool __eq__(DdManager* other) {
-    return self == other ? TRUE : FALSE;
+    return self == other;
   }
 
   bool __ne__(DdManager* other) {
-    return self != other ? TRUE : FALSE;
+    return self != other;
   }
 
 
@@ -377,8 +377,8 @@ cerr << "Quitting manager" << endl;
 %newobject zddPortToBdd;   DdNode *  zddPortToBdd( DdNode *f) { DdNode* result = Cudd_zddPortToBdd(self,  f); Cudd_Ref(result); return result; }
 %newobject MakeBddFromZddCover;   DdNode *  MakeBddFromZddCover( DdNode *node) { DdNode* result = Cudd_MakeBddFromZddCover(self,  node); Cudd_Ref(result); return result; }
   void PrintVersion(FILE *fp) { Cudd_PrintVersion(fp); }
-  long Random() { return Cudd_Random(); }
-  void Srandom( long seed) { Cudd_Srandom(seed); }
+  long Random() { return Cudd_Random(self); }
+  void Srandom( long seed) { Cudd_Srandom(self, (int32_t) seed); }
   void OutOfMem(long size) {  Cudd_OutOfMem(size); }
 %newobject Transfer;   DdNode * Transfer( DdManager *ddDestination, DdNode *f) { DdNode* result = Cudd_bddTransfer(self, ddDestination, f); Cudd_Ref(result); return result; }
 
@@ -498,12 +498,10 @@ cerr << "Quitting manager" << endl;
 
   // Re-entrant methods for DDNode
 
-#if CUDDVER >= 0x020400
   %newobject AndAbstractLimit;  DdNode * AndAbstractLimit(DdNode *this_node, DdNode *g, DdNode *cube, unsigned int limit) { DdNode* result = Cudd_bddAndAbstractLimit(self, this_node,g,cube,limit); Cudd_Ref(result); return result; }
   %newobject AndLimit;  DdNode * AndLimit(DdNode *this_node, DdNode *g, unsigned int limit) { DdNode* result = Cudd_bddAndLimit(self, this_node, g, limit); Cudd_Ref(result); return result; }
   %newobject NPAnd;  DdNode * NPAnd(DdNode *this_node, DdNode *c) { DdNode* result =  Cudd_bddNPAnd(self, this_node, c); Cudd_Ref(result); return result; }
   DdTlcInfo * FindTwoLiteralClauses(DdNode *this_node) { DdTlcInfo * result = Cudd_FindTwoLiteralClauses(self, this_node); return result; }
-#endif
 
   int EpdCountMinterm(DdNode *this_node, int nvars, EpDouble *epd) { return Cudd_EpdCountMinterm(self,this_node,nvars,epd); }
   // Added in this version of pycudd -- various decomposition techniques and other odds and ends
@@ -561,7 +559,7 @@ cerr << "Quitting manager" << endl;
 %newobject VarMap;   DdNode *  VarMap(DdNode *this_node) { DdNode* result = Cudd_bddVarMap(self, this_node); Cudd_Ref(result); return result; }
   %newobject LiteralSetIntersection;   DdNode *  LiteralSetIntersection(DdNode *this_node, DdNode *g) { DdNode* result = Cudd_bddLiteralSetIntersection(self, this_node,  g); Cudd_Ref(result); return result; }
   int  IsVarEssential(DdNode *this_node,  int id, int phase) { return Cudd_bddIsVarEssential(self, this_node,  id,  phase); }
-  bool  Leq(DdNode *this_node,  DdNode *g) { return Cudd_bddLeq(self, this_node,  g) ? TRUE : FALSE; }
+  bool  Leq(DdNode *this_node,  DdNode *g) { return Cudd_bddLeq(self, this_node,  g); }
   DdArray *  CharToVect(DdNode *this_node) { DdNode** tresult = Cudd_bddCharToVect(self, this_node); int size = Cudd_ReadSize(self); DdArray* result = new DdArray(self, size); result->Assign(tresult,size); return result; }
   DdArray *  ConstrainDecomp(DdNode *this_node) { DdNode** tresult = Cudd_bddConstrainDecomp(self, this_node); int size = Cudd_ReadSize(self); DdArray* result = new DdArray(self, size); result->Assign(tresult,size); return result; }
 %newobject Isop;   DdNode *  Isop(DdNode *this_node,  DdNode *U) { DdNode* result = Cudd_bddIsop(self, this_node,  U); Cudd_Ref(result); return result; }

@@ -45,6 +45,13 @@ for x, y in zip(reversed(xs), reversed(ys)):
     g = mgr.And(g, mgr.Xnor(y, x))
 assert f == g
 
+# Cube enumeration goes through DdGen and the Python iterator layer, which
+# pysmt uses to extract models. 2 marks a don't-care literal.
+mgr = repycudd.DdManager()
+x0, x1, x2 = (mgr.IthVar(i) for i in range(3))
+f = mgr.Or(mgr.And(x0, mgr.Not(x1)), mgr.And(x1, x2))
+assert sorted(repycudd.ForeachCubeIterator(mgr, f)) == [(0, 1, 1), (1, 0, 2), (1, 1, 1)]
+
 # Memory limits above 4 GB must survive the round trip (long is 32 bits on Win64).
 SIX_GB = 6 << 30
 mgr = repycudd.DdManager(0, 0, 256, 262144, SIX_GB)

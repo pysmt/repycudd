@@ -5,15 +5,9 @@
 //
 //////////////////////////////////////////////
 
-#if CUDDVER >= 0x020400
 %pythoncode %{
-cudd_version = 0x020400
+cudd_version = 0x030000
 %}
-#else
-%pythoncode %{
-cudd_version = 0
-%}
-#endif
 
 
 %pythoncode %{
@@ -78,10 +72,6 @@ class ForeachNodeIterator:
 
 class ForeachPrimeIterator:
     def __init__(self,mgr,npair):
-        global cudd_version
-        if cudd_version < 0x020400:
-            print("CUDD versions < 2.4.0 do not support iteration over primes")
-            raise RuntimeError
         self.gen = DdGen(mgr,npair.LOWER(), iter_meth, npair.UPPER())
         self.npair = npair
         self.done = 0

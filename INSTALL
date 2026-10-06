@@ -1,8 +1,8 @@
 INSTALLING REPYCUDD
 -------------------
 
-repycudd builds with pip on Linux and 64-bit Windows (CI covers both). CUDD 2.4.2 is
-vendored in cudd-2.4.2/ and linked statically into the extension, so there is
+repycudd builds with pip on Linux and 64-bit Windows (CI covers both). CUDD 3.0.0 is
+vendored in cudd-3.0.0/ and linked statically into the extension, so there is
 nothing else to install.
 
 Requirements:

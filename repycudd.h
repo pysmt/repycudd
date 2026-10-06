@@ -2,6 +2,9 @@
 #define PYCUDD_H
 
 #include "util.h"
+// cudd.h declares its Mtr and Epd functions only when these come first.
+#include "mtr.h"
+#include "epd.h"
 #include "cudd.h"
 #include "cuddInt.h"
 #include "dddmp.h"
