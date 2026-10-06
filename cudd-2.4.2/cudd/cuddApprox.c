@@ -73,7 +73,7 @@
 
 ******************************************************************************/
 
-#ifdef __STDC__
+#if defined(__STDC__) || defined(_MSC_VER)
 #include <float.h>
 #else
 #define DBL_MAX_EXP 1024

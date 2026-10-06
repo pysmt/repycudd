@@ -100,14 +100,14 @@ extern int optind, opterr;
 
 
 /* Some machines fail to define some functions in stdio.h */
-#if !defined(__STDC__) && !defined(__cplusplus)
+#if !defined(__STDC__) && !defined(__cplusplus) && !defined(_MSC_VER)
 extern FILE *popen(), *tmpfile();
 extern int pclose();
 #endif
 
 
 /* most machines don't give us a header file for these */
-#if (defined(__STDC__) || defined(__cplusplus) || defined(ultrix)) && !defined(MNEMOSYNE) || defined(__SVR4)
+#if (defined(__STDC__) || defined(__cplusplus) || defined(_MSC_VER) || defined(ultrix)) && !defined(MNEMOSYNE) || defined(__SVR4)
 # include <stdlib.h>
 #else
 # ifndef _IBMR2
@@ -124,7 +124,7 @@ extern int pclose();
 
 
 /* some call it strings.h, some call it string.h; others, also have memory.h */
-#if defined(__STDC__) || defined(__cplusplus) || defined(_IBMR2) || defined(ultrix)
+#if defined(__STDC__) || defined(__cplusplus) || defined(_MSC_VER) || defined(_IBMR2) || defined(ultrix)
 #include <string.h>
 #else
 /* ANSI C string.h -- 1/11/88 Draft Standard */
@@ -136,7 +136,7 @@ extern int memcmp(), strcmp();
 #endif
 
 
-#ifdef __STDC__
+#if defined(__STDC__) || defined(_MSC_VER)
 #include <assert.h>
 #else
 #ifndef NDEBUG
