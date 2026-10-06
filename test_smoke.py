@@ -3,6 +3,9 @@
 This is a regression net for the build, not a test suite for CUDD. Run it with
 PYTHONPATH pointing at a directory holding repycudd.py and _repycudd.*.
 """
+import os
+import re
+
 import repycudd
 
 mgr = repycudd.DdManager()
@@ -59,5 +62,10 @@ assert mgr.ReadMaxMemory() >= 2 ** 64 - 1  # default hard limit is SIZE_MAX
 mgr.SetMaxMemory(SIX_GB)
 assert mgr.ReadMaxMemory() == SIX_GB
 assert mgr.ReadMemoryInUse() > 0
+
+# pysmt reads the installed version from DOCSTRING, so it must track pyproject.toml.
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "pyproject.toml")) as f:
+    version = re.search(r'^version = "(.*)"', f.read(), re.M).group(1)
+assert repycudd.DOCSTRING.startswith("PyCUDD %s\n" % version), repycudd.DOCSTRING[:20]
 
 print("ok")

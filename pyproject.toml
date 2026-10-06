@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "repycudd"
-version = "3.0.0"
+version = "3.0.1"
 description = "Python bindings for the CUDD 3.0.0 decision diagram package"
 license = { text = "BSD-3-Clause" }
 requires-python = ">=3.8"
