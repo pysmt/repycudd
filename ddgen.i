@@ -18,12 +18,10 @@ __doc__ = "Not expected to be used directly."
     if (method == 0) result = Cudd_FirstCube(ddman, node1, cube_iter, &val);
     else if (method == 1) result = Cudd_FirstNode(ddman, node1, node_iter);
 
-#if CUDDVER >= 0x020400
     else if (method == 2) {
       assert(node2 != NULL);
       result = Cudd_FirstPrime(ddman,node1,node2, cube_iter);
     }
-#endif
 
     return result;
   }

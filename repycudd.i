@@ -26,7 +26,6 @@ using std::endl;
 using std::hex;
 using std::string;
 
-#include "cudd.h"
 #include "repycudd.h"
 #include "dddmp.h"
 #include "epd.h"
@@ -53,11 +52,12 @@ using std::string;
 #endif
 
 /* FIXME: Add attributes and methods */
+// Opaque since CUDD 3.0.0, and CUDD frees tree nodes itself.
+%nodefaultctor MtrNode;
+%nodefaultdtor MtrNode;
 struct MtrNode { };
 
-#if CUDDVER >= 0x020400    // If you have CUDD 2.4.0, this enables enumeration of two literal clauses
 %include tlcinfo.i
-#endif
 %include epd.i
 %include ddmanager.i  // Provides methods of DdManager
 %include ddgen.i      // Provides DdGen -- not expected to be used externally

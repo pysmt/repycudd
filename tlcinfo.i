@@ -5,7 +5,7 @@
 %}
 
 // Return the clauses as (valid?, (var1,phase1), (var2,phase2))
-%typemap (argout) (DdHalfWord *dum_var1, DdHalfWord *dum_var2, int *dum_phase1, int *dum_phase2) {
+%typemap (argout) (unsigned *dum_var1, unsigned *dum_var2, int *dum_phase1, int *dum_phase2) {
   PyObject *o, *o2, *o3;
   o2 = $result;
   $result = PyTuple_New(3);
@@ -31,11 +31,11 @@
 }
 
 
-%typemap(in,numinputs=0) DdHalfWord *dum_var1 (DdHalfWord dv1) {
+%typemap(in,numinputs=0) unsigned *dum_var1 (unsigned dv1) {
   $1 = &dv1;
 }
 
-%typemap(in,numinputs=0) DdHalfWord *dum_var2 (DdHalfWord dv2) {
+%typemap(in,numinputs=0) unsigned *dum_var2 (unsigned dv2) {
   $1 = &dv2;
 }
 
@@ -54,7 +54,7 @@ __doc__ = "Helper class for enumeration of two literal clauses. Look at example2
   }
   %apply int *OUTPUT { int * dum_phase1 }
   %apply int *OUTPUT { int * dum_phase2 }
-  int ReadIthClause(int i, DdHalfWord *dum_var1, DdHalfWord *dum_var2, int *dum_phase1, int *dum_phase2) { return Cudd_ReadIthClause(self, i, dum_var1, dum_var2, dum_phase1, dum_phase2); }
+  int ReadIthClause(int i, unsigned *dum_var1, unsigned *dum_var2, int *dum_phase1, int *dum_phase2) { return Cudd_ReadIthClause(self, i, dum_var1, dum_var2, dum_phase1, dum_phase2); }
 }
 
  

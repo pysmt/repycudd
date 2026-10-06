@@ -108,16 +108,16 @@ __doc__ = "This class wraps around the basic DdNode. The methods defined by this
 
 
   bool __cmp__ (DdNode* other) {
-    if (self == other) return FALSE;
-    return TRUE;
+    if (self == other) return false;
+    return true;
   }
 
   bool __eq__(DdNode* other) {
-    return self == other ? TRUE : FALSE;
+    return self == other;
   }
 
   bool __ne__(DdNode* other) {
-    return self != other ? TRUE : FALSE;
+    return self != other;
   }
 
   int __len__() {
@@ -130,7 +130,6 @@ __doc__ = "This class wraps around the basic DdNode. The methods defined by this
 
 };
 
-#if CUDDVER >= 0x020400
 // NodePair is a helper struct used for prime enumeration
 %{
 struct NodePair {
@@ -191,4 +190,3 @@ __doc__="This is used to provide the functionality of prime enumeration in CUDD 
   }
 
 };
-#endif
