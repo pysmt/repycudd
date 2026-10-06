@@ -203,7 +203,7 @@ extern void util_restart (char const *, char const *, int);
 extern int util_optind;
 extern char *util_optarg;
 
-extern unsigned long getSoftDataLimit (void);
+extern size_t getSoftDataLimit (void);
 
 #ifdef __cplusplus
 }

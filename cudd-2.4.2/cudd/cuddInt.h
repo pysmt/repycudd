@@ -437,9 +437,9 @@ struct DdManager {	/* specialized DD symbol table */
 #endif
     Cudd_ErrorType errorCode;	/* info on last error */
     /* Statistical counters. */
-    unsigned long memused;	/* total memory allocated for the manager */
-    unsigned long maxmem;	/* target maximum memory */
-    unsigned long maxmemhard;	/* hard limit for maximum memory */
+    size_t memused;		/* total memory allocated for the manager */
+    size_t maxmem;		/* target maximum memory */
+    size_t maxmemhard;		/* hard limit for maximum memory */
     int garbageCollections;	/* number of garbage collections */
     long GCTime;		/* total time spent in garbage collection */
     long reordTime;		/* total time spent in reordering */

@@ -435,7 +435,7 @@ cuddDynamicAllocNode(
 #ifdef DD_VERBOSE
 	    (void) fprintf(table->err,
 			   "cuddDynamicAllocNode: out of memory");
-	    (void) fprintf(table->err,"Memory in use = %lu\n",
+	    (void) fprintf(table->err,"Memory in use = %zu\n",
 			   table->memused);
 #endif
 	    return(NULL);

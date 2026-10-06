@@ -45,4 +45,12 @@ for x, y in zip(reversed(xs), reversed(ys)):
     g = mgr.And(g, mgr.Xnor(y, x))
 assert f == g
 
+# Memory limits above 4 GB must survive the round trip (long is 32 bits on Win64).
+SIX_GB = 6 << 30
+mgr = repycudd.DdManager(0, 0, 256, 262144, SIX_GB)
+assert mgr.ReadMaxMemory() >= 2 ** 64 - 1  # default hard limit is SIZE_MAX
+mgr.SetMaxMemory(SIX_GB)
+assert mgr.ReadMaxMemory() == SIX_GB
+assert mgr.ReadMemoryInUse() > 0
+
 print("ok")

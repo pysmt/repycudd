@@ -1343,7 +1343,7 @@ Cudd_SetLooseUpTo(
   unsigned int lut)
 {
     if (lut == 0) {
-	unsigned long datalimit = getSoftDataLimit();
+	size_t datalimit = getSoftDataLimit();
 	lut = (unsigned int) (datalimit / (sizeof(DdNode) *
 					   DD_MAX_LOOSE_FRACTION));
     }
@@ -1413,7 +1413,7 @@ Cudd_SetMaxCacheHard(
   unsigned int mc)
 {
     if (mc == 0) {
-	unsigned long datalimit = getSoftDataLimit();
+	size_t datalimit = getSoftDataLimit();
 	mc = (unsigned int) (datalimit / (sizeof(DdCache) *
 					  DD_MAX_CACHE_FRACTION));
     }
@@ -2908,7 +2908,7 @@ Cudd_SetNumberXovers(
   SeeAlso     []
 
 ******************************************************************************/
-unsigned long
+size_t
 Cudd_ReadMemoryInUse(
   DdManager * dd)
 {
@@ -3008,7 +3008,7 @@ Cudd_PrintInfo(
     /* Non-modifiable parameters. */
     retval = fprintf(fp,"**** CUDD non-modifiable parameters ****\n");
     if (retval == EOF) return(0);
-    retval = fprintf(fp,"Memory in use: %lu\n", Cudd_ReadMemoryInUse(dd));
+    retval = fprintf(fp,"Memory in use: %zu\n", Cudd_ReadMemoryInUse(dd));
     if (retval == EOF) return(0);
     retval = fprintf(fp,"Peak number of nodes: %ld\n",
 		     Cudd_ReadPeakNodeCount(dd));
@@ -3848,7 +3848,7 @@ Cudd_SetMaxLive(
   SeeAlso     [Cudd_SetMaxMemory]
 
 ******************************************************************************/
-unsigned long
+size_t
 Cudd_ReadMaxMemory(
   DdManager *dd)
 {
@@ -3872,7 +3872,7 @@ Cudd_ReadMaxMemory(
 void
 Cudd_SetMaxMemory(
   DdManager *dd,
-  unsigned long maxMemory)
+  size_t maxMemory)
 {
     dd->maxmemhard = maxMemory;
 
