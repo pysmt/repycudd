@@ -284,7 +284,7 @@ cuddAllocNode(
 #ifdef DD_VERBOSE
 			(void) fprintf(unique->err,
 				       "cuddAllocNode: out of memory");
-			(void) fprintf(unique->err, "Memory in use = %lu\n",
+			(void) fprintf(unique->err, "Memory in use = %zu\n",
 				       unique->memused);
 #endif
 			return(NULL);
@@ -608,7 +608,7 @@ cuddInitTable(
     unique->errorCode = CUDD_NO_ERROR;
 
     /* Initialize statistical counters. */
-    unique->maxmemhard = ~ 0UL;
+    unique->maxmemhard = ~ (size_t) 0;
     unique->garbageCollections = 0;
     unique->GCTime = 0;
     unique->reordTime = 0;

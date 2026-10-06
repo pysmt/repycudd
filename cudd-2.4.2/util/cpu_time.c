@@ -19,6 +19,10 @@
 #include <sys/times.h>
 #endif
 
+#ifdef _WIN32
+#include <time.h>
+#endif
+
 #ifdef vms		/* VAX/C compiler -- times() with 100 HZ clock */
 #include <types.h>
 #include <time.h>
@@ -64,6 +68,11 @@ util_cpu_time()
     struct tms buffer;		/* times() with 1000 Hz resolution */
     times(&buffer);
     t = buffer.tms_utime;
+#endif
+
+#ifdef _WIN32
+    /* MSVC's clock() is wall time since process start, close enough for CUDD's stats. */
+    t = (long) (clock() * 1000 / CLOCKS_PER_SEC);
 #endif
 
 #ifdef vms

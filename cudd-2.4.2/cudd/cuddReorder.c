@@ -302,7 +302,7 @@ Cudd_ReduceHeap(
     /* Run hook functions. */
     hook = table->postReorderingHook;
     while (hook != NULL) {
-	int res = (hook->f)(table, "BDD", (void *)localTime);
+	int res = (hook->f)(table, "BDD", (void *)(intptr_t)localTime);
 	if (res == 0) return(0);
 	hook = hook->next;
     }
@@ -435,7 +435,7 @@ cuddDynamicAllocNode(
 #ifdef DD_VERBOSE
 	    (void) fprintf(table->err,
 			   "cuddDynamicAllocNode: out of memory");
-	    (void) fprintf(table->err,"Memory in use = %lu\n",
+	    (void) fprintf(table->err,"Memory in use = %zu\n",
 			   table->memused);
 #endif
 	    return(NULL);
@@ -449,7 +449,7 @@ cuddDynamicAllocNode(
 	    ** power of 2 and a multiple of the size of a pointer.
 	    ** If we align one node, all the others will be aligned
 	    ** as well. */
-	    offset = (unsigned long) mem & (sizeof(DdNode) - 1);
+	    offset = (uintptr_t) mem & (sizeof(DdNode) - 1);
 	    mem += (sizeof(DdNode) - offset) / sizeof(DdNodePtr);
 #ifdef DD_DEBUG
 	    assert(((unsigned long) mem & (sizeof(DdNode) - 1)) == 0);

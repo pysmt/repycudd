@@ -476,7 +476,7 @@ CorrelHash(
 
     entry = (HashEntry *) key;
 #if SIZEOF_VOID_P == 8 && SIZEOF_INT == 4
-    val = ((int) ((long)entry->f))*997 + ((int) ((long)entry->g));
+    val = ((int) ((intptr_t)entry->f))*997 + ((int) ((intptr_t)entry->g));
 #else
     val = ((int) entry->f)*997 + ((int) entry->g);
 #endif

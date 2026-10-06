@@ -2638,13 +2638,13 @@ Cudd_AverageDistance(
 	for (j = 0; j < slots; j++) {
 	    scan = nodelist[j];
 	    while (scan != sentinel) {
-		diff = (long) scan - (long) cuddT(scan);
+		diff = (intptr_t) scan - (intptr_t) cuddT(scan);
 		tesubtotal += (double) ddAbs(diff);
-		diff = (long) scan - (long) Cudd_Regular(cuddE(scan));
+		diff = (intptr_t) scan - (intptr_t) Cudd_Regular(cuddE(scan));
 		tesubtotal += (double) ddAbs(diff);
 		temeasured += 2.0;
 		if (scan->next != sentinel) {
-		    diff = (long) scan - (long) scan->next;
+		    diff = (intptr_t) scan - (intptr_t) scan->next;
 		    nextsubtotal += (double) ddAbs(diff);
 		    nextmeasured += 1.0;
 		}
@@ -2663,7 +2663,7 @@ Cudd_AverageDistance(
 	scan = nodelist[j];
 	while (scan != NULL) {
 	    if (scan->next != NULL) {
-		diff = (long) scan - (long) scan->next;
+		diff = (intptr_t) scan - (intptr_t) scan->next;
 		nextsubtotal += (double) ddAbs(diff);
 		nextmeasured += 1.0;
 	    }

@@ -12,18 +12,18 @@
   PyTuple_SetItem($result,0,o2);
 
   o3 = PyTuple_New(2);
-  if (*$1 == CUDD_MAXINDEX) o = PyInt_FromLong(-1);
-  else o = PyInt_FromLong(*$1);
+  if (*$1 == CUDD_MAXINDEX) o = PyLong_FromLong(-1);
+  else o = PyLong_FromLong(*$1);
   PyTuple_SetItem(o3,0,o);
-  o = PyInt_FromLong(*$3);
+  o = PyLong_FromLong(*$3);
   PyTuple_SetItem(o3,1,o);
   PyTuple_SetItem($result,1,o3);
 
   o3 = PyTuple_New(2);
-  if (*$2 == CUDD_MAXINDEX) o = PyInt_FromLong(-1);
-  else o = PyInt_FromLong(*$2);
+  if (*$2 == CUDD_MAXINDEX) o = PyLong_FromLong(-1);
+  else o = PyLong_FromLong(*$2);
   PyTuple_SetItem(o3,0,o);
-  o = PyInt_FromLong(*$4);
+  o = PyLong_FromLong(*$4);
   PyTuple_SetItem(o3,1,o);
   PyTuple_SetItem($result,2,o3);
 

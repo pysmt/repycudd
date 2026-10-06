@@ -143,7 +143,7 @@ struct DdManager { };
 %pythoncode %{
   __doc__ = "This class wraps around the DdManager. The methods defined by this class provide themselves as the DdManager option (if needed)."
 %}
-%newobject DdManager;  DdManager(unsigned int numVars = 0, unsigned int numVarsZ = 0, unsigned int numSlots = CUDD_UNIQUE_SLOTS, unsigned int cacheSize = CUDD_CACHE_SLOTS, unsigned long maxMemory = 0) {
+%newobject DdManager;  DdManager(unsigned int numVars = 0, unsigned int numVarsZ = 0, unsigned int numSlots = CUDD_UNIQUE_SLOTS, unsigned int cacheSize = CUDD_CACHE_SLOTS, size_t maxMemory = 0) {
     return Cudd_Init(numVars,numVarsZ,numSlots,cacheSize,maxMemory);
   }
 
@@ -169,11 +169,11 @@ cerr << "Quitting manager" << endl;
 
   // This takes a long int representing the address of a DdNode and
   // derefs it. Use with caution!!
-  void KillNode(long int num) {
+  void KillNode(long long num) {
 #ifdef PYCUDD_DEBUG
     cerr << "Derefing " << hex << num << endl;
 #endif
-    Cudd_RecursiveDeref(self, (DdNode *) num);
+    Cudd_RecursiveDeref(self, (DdNode *)(intptr_t) num);
   }
 
   /* CUDD Manager functions */
@@ -329,7 +329,7 @@ cerr << "Quitting manager" << endl;
   void  SetPopulationSize( int populationSize) { Cudd_SetPopulationSize(self,  populationSize); }
   int  ReadNumberXovers() { return Cudd_ReadNumberXovers(self); }
   void  SetNumberXovers( int numberXovers) { Cudd_SetNumberXovers(self,  numberXovers); }
-  long  ReadMemoryInUse() { return Cudd_ReadMemoryInUse(self); }
+  size_t  ReadMemoryInUse() { return Cudd_ReadMemoryInUse(self); }
   int  PrintInfo(FILE *fp) { return Cudd_PrintInfo(self, fp); }
   long  ReadPeakNodeCount() { return Cudd_ReadPeakNodeCount(self); }
   int  ReadPeakLiveNodeCount() { return Cudd_ReadPeakLiveNodeCount(self); }
@@ -348,8 +348,8 @@ cerr << "Quitting manager" << endl;
   double  ReadSwapSteps() { return Cudd_ReadSwapSteps(self); }
   unsigned int  ReadMaxLive() { return Cudd_ReadMaxLive(self); }
   void  SetMaxLive( unsigned int maxLive) { Cudd_SetMaxLive(self,   maxLive); }
-  long  ReadMaxMemory() { return Cudd_ReadMaxMemory(self); }
-  void  SetMaxMemory( long maxMemory) { Cudd_SetMaxMemory(self,  maxMemory); }
+  size_t  ReadMaxMemory() { return Cudd_ReadMaxMemory(self); }
+  void  SetMaxMemory( size_t maxMemory) { Cudd_SetMaxMemory(self,  maxMemory); }
   void  SetNextReordering( unsigned int next) { Cudd_SetNextReordering(self,   next); }
   int  DebugCheck() { return Cudd_DebugCheck(self); }
   int  CheckKeys() { return Cudd_CheckKeys(self); }

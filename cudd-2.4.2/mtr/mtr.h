@@ -79,7 +79,7 @@ extern "C" {
 #endif
 
 #undef CONST
-#if defined(__STDC__) || defined(__cplusplus)
+#if defined(__STDC__) || defined(__cplusplus) || defined(_MSC_VER)
 #define CONST           const
 #else /* !(__STDC__ || __cplusplus) */
 #define CONST

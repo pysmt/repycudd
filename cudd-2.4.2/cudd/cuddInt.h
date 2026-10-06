@@ -70,6 +70,7 @@
 #endif
 
 #include <math.h>
+#include <stdint.h>
 #include "cudd.h"
 #include "st.h"
 
@@ -248,13 +249,9 @@ typedef struct DdHook {		/* hook list element */
     struct DdHook *next;	/* next element in the list */
 } DdHook;
 
-#if SIZEOF_VOID_P == 8 && SIZEOF_INT == 4
-typedef long ptrint;
-typedef unsigned long ptruint;
-#else
-typedef int ptrint;
-typedef unsigned int ptruint;
-#endif
+/* intptr_t, not long: long is 32 bits on Win64 (LLP64). */
+typedef intptr_t ptrint;
+typedef uintptr_t ptruint;
 
 #ifdef __osf__
 #pragma pointer_size save
@@ -440,9 +437,9 @@ struct DdManager {	/* specialized DD symbol table */
 #endif
     Cudd_ErrorType errorCode;	/* info on last error */
     /* Statistical counters. */
-    unsigned long memused;	/* total memory allocated for the manager */
-    unsigned long maxmem;	/* target maximum memory */
-    unsigned long maxmemhard;	/* hard limit for maximum memory */
+    size_t memused;		/* total memory allocated for the manager */
+    size_t maxmem;		/* target maximum memory */
+    size_t maxmemhard;		/* hard limit for maximum memory */
     int garbageCollections;	/* number of garbage collections */
     long GCTime;		/* total time spent in garbage collection */
     long reordTime;		/* total time spent in reordering */

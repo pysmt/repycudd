@@ -29,9 +29,11 @@
 #   endif
 #endif
 
-EXTERN unsigned long getSoftDataLimit(void);
+#include <stddef.h>
 
-unsigned long
+EXTERN size_t getSoftDataLimit(void);
+
+size_t
 getSoftDataLimit(void)
 {
 #if HAVE_SYS_RESOURCE_H == 1 && HAVE_GETRLIMIT == 1 && defined(RLIMIT_DATA)
@@ -40,11 +42,11 @@ getSoftDataLimit(void)
 
     result = getrlimit(RLIMIT_DATA, &rl);
     if (result != 0 || rl.rlim_cur == RLIM_INFINITY)
-	return((unsigned long) RLIMIT_DATA_DEFAULT);
+	return((size_t) RLIMIT_DATA_DEFAULT);
     else
-	return((unsigned long) rl.rlim_cur);
+	return((size_t) rl.rlim_cur);
 #else
-    return((unsigned long) RLIMIT_DATA_DEFAULT);
+    return((size_t) RLIMIT_DATA_DEFAULT);
 #endif
 
 } /* end of getSoftDataLimit */

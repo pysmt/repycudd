@@ -1,0 +1,11 @@
+[build-system]
+# swig 4.0.0 and 4.0.1 produce broken bindings for this module.
+requires = ["setuptools>=61", "swig>=4.0.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repycudd"
+version = "2.1.0"
+description = "Python bindings for the CUDD 2.4.2 decision diagram package"
+license = { text = "BSD-3-Clause" }
+requires-python = ">=3.8"

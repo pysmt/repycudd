@@ -664,7 +664,7 @@ DddmpCuddDdArrayStorePrefixBody (
     if (Cudd_IsComplement(f[i])) {
 #if SIZEOF_VOID_P == 8
       retValue = fprintf (fp, "(NOT node%lx))\n",
-        (unsigned long) f[i] / (unsigned long) sizeof(DdNode));
+        (uintptr_t) f[i] / (uintptr_t) sizeof(DdNode));
 #else
       retValue = fprintf (fp, "(NOT node%x))\n",
         (unsigned) f[i] / (unsigned) sizeof(DdNode));
@@ -672,7 +672,7 @@ DddmpCuddDdArrayStorePrefixBody (
     } else {
 #if SIZEOF_VOID_P == 8
       retValue = fprintf (fp, "node%lx)\n",
-        (unsigned long) f[i] / (unsigned long) sizeof(DdNode));
+        (uintptr_t) f[i] / (uintptr_t) sizeof(DdNode));
 #else
       retValue = fprintf (fp, "node%x)\n",
         (unsigned) f[i] / (unsigned) sizeof(DdNode));
@@ -754,7 +754,7 @@ DddmpCuddDdArrayStorePrefixStep (
 #if SIZEOF_VOID_P == 8
     retValue = fprintf (fp,
       "(OR node%lx vss vdd)\n",
-      (unsigned long) f / (unsigned long) sizeof(DdNode));
+      (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
     retValue = fprintf (fp,
       "(OR node%x vss vdd)\n",
@@ -776,7 +776,7 @@ DddmpCuddDdArrayStorePrefixStep (
 #if SIZEOF_VOID_P == 8
     retValue = fprintf (fp,
       "(AND node%lx vss vdd)\n",
-       (unsigned long) f / (unsigned long) sizeof(DdNode));
+       (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
     retValue = fprintf (fp,
       "(AND node%x vss vdd)\n",
@@ -808,7 +808,7 @@ DddmpCuddDdArrayStorePrefixStep (
   /* Write multiplexer taking complement arc into account. */
 #if SIZEOF_VOID_P == 8
   retValue = fprintf (fp, "(OR node%lx (AND ",
-    (unsigned long) f / (unsigned long) sizeof(DdNode));
+    (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
   retValue = fprintf (fp, "(OR node%x (AND ",
     (unsigned) f / (unsigned) sizeof(DdNode));
@@ -828,7 +828,7 @@ DddmpCuddDdArrayStorePrefixStep (
 
 #if SIZEOF_VOID_P == 8
   retValue = fprintf (fp, "node%lx) (AND (NOT ",
-    (unsigned long) T / (unsigned long) sizeof(DdNode));
+    (uintptr_t) T / (uintptr_t) sizeof(DdNode));
 #else
   retValue = fprintf (fp, "node%x) (AND (NOT ",
     (unsigned) T / (unsigned) sizeof(DdNode));
@@ -849,10 +849,10 @@ DddmpCuddDdArrayStorePrefixStep (
 #if SIZEOF_VOID_P == 8
   if (Cudd_IsComplement(cuddE(f))) {
     retValue = fprintf (fp, ") (NOT node%lx)))\n",
-      (unsigned long) E / (unsigned long) sizeof(DdNode));
+      (uintptr_t) E / (uintptr_t) sizeof(DdNode));
   } else {
     retValue = fprintf (fp, ") node%lx))\n",
-      (unsigned long) E / (unsigned long) sizeof(DdNode));
+      (uintptr_t) E / (uintptr_t) sizeof(DdNode));
   }
 #else
   if (Cudd_IsComplement(cuddE(f))) {
@@ -1066,7 +1066,7 @@ DddmpCuddDdArrayStoreBlifBody (
       retValue = fprintf(fp,
 #if SIZEOF_VOID_P == 8
         ".names node%lx outNode%d\n",
-        (unsigned long) f[i] / (unsigned long) sizeof(DdNode), i);
+        (uintptr_t) f[i] / (uintptr_t) sizeof(DdNode), i);
 #else
 	".names node%x outNode%d\n",
         (unsigned) f[i] / (unsigned) sizeof(DdNode), i);
@@ -1075,7 +1075,7 @@ DddmpCuddDdArrayStoreBlifBody (
       retValue = fprintf(fp,
 #if SIZEOF_VOID_P == 8
         ".names node%lx %s\n",
-        (unsigned long) f[i] / (unsigned long) sizeof(DdNode), outputNames[i]);
+        (uintptr_t) f[i] / (uintptr_t) sizeof(DdNode), outputNames[i]);
 #else
         ".names node%x %s\n",
         (unsigned) f[i] / (unsigned) sizeof(DdNode), outputNames[i]);
@@ -1154,7 +1154,7 @@ DddmpCuddDdArrayStoreBlifStep (
   if (f == DD_ONE(ddMgr)) {
 #if SIZEOF_VOID_P == 8
     retValue = fprintf(fp, ".names node%lx\n1\n",
-      (unsigned long) f / (unsigned long) sizeof(DdNode));
+      (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
     retValue = fprintf(fp, ".names node%x\n1\n",
       (unsigned) f / (unsigned) sizeof(DdNode));
@@ -1172,7 +1172,7 @@ DddmpCuddDdArrayStoreBlifStep (
   if (f == DD_ZERO(ddMgr)) {
 #if SIZEOF_VOID_P == 8
     retValue = fprintf(fp, ".names node%lx\n",
-      (unsigned long) f / (unsigned long) sizeof(DdNode));
+      (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
     retValue = fprintf(fp, ".names node%x\n",
       (unsigned) f / (unsigned) sizeof(DdNode));
@@ -1208,14 +1208,14 @@ DddmpCuddDdArrayStoreBlifStep (
 #if SIZEOF_VOID_P == 8
   if (Cudd_IsComplement(cuddE(f))) {
     retValue = fprintf(fp," node%lx node%lx node%lx\n11- 1\n0-0 1\n",
-      (unsigned long) T / (unsigned long) sizeof(DdNode),
-      (unsigned long) E / (unsigned long) sizeof(DdNode),
-      (unsigned long) f / (unsigned long) sizeof(DdNode));
+      (uintptr_t) T / (uintptr_t) sizeof(DdNode),
+      (uintptr_t) E / (uintptr_t) sizeof(DdNode),
+      (uintptr_t) f / (uintptr_t) sizeof(DdNode));
   } else {
     retValue = fprintf(fp," node%lx node%lx node%lx\n11- 1\n0-1 1\n",
-      (unsigned long) T / (unsigned long) sizeof(DdNode),
-      (unsigned long) E / (unsigned long) sizeof(DdNode),
-      (unsigned long) f / (unsigned long) sizeof(DdNode));
+      (uintptr_t) T / (uintptr_t) sizeof(DdNode),
+      (uintptr_t) E / (uintptr_t) sizeof(DdNode),
+      (uintptr_t) f / (uintptr_t) sizeof(DdNode));
   }
 #else
   if (Cudd_IsComplement(cuddE(f))) {
@@ -1432,7 +1432,7 @@ DddmpCuddDdArrayStoreSmvBody (
     if (Cudd_IsComplement(f[i])) {
 #if SIZEOF_VOID_P == 8
       retValue = fprintf (fp, "!node%lx\n",
-        (unsigned long) f[i] / (unsigned long) sizeof(DdNode));
+        (uintptr_t) f[i] / (uintptr_t) sizeof(DdNode));
 #else
       retValue = fprintf (fp, "!node%x\n",
         (unsigned) f[i] / (unsigned) sizeof(DdNode));
@@ -1440,7 +1440,7 @@ DddmpCuddDdArrayStoreSmvBody (
     } else {
 #if SIZEOF_VOID_P == 8
       retValue = fprintf (fp, "node%lx\n",
-        (unsigned long) f[i] / (unsigned long) sizeof(DdNode));
+        (uintptr_t) f[i] / (uintptr_t) sizeof(DdNode));
 #else
       retValue = fprintf (fp, "node%x\n",
         (unsigned) f[i] / (unsigned) sizeof(DdNode));
@@ -1522,7 +1522,7 @@ DddmpCuddDdArrayStoreSmvStep (
 #if SIZEOF_VOID_P == 8
     retValue = fprintf (fp,
       "node%lx := 1;\n",
-      (unsigned long) f / (unsigned long) sizeof(DdNode));
+      (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
     retValue = fprintf (fp,
       "node%x := 1;\n",
@@ -1544,7 +1544,7 @@ DddmpCuddDdArrayStoreSmvStep (
 #if SIZEOF_VOID_P == 8
     retValue = fprintf (fp,
       "node%lx := 0;\n",
-       (unsigned long) f / (unsigned long) sizeof(DdNode));
+       (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
     retValue = fprintf (fp,
       "node%x := 0;\n",
@@ -1576,7 +1576,7 @@ DddmpCuddDdArrayStoreSmvStep (
   /* Write multiplexer taking complement arc into account. */
 #if SIZEOF_VOID_P == 8
   retValue = fprintf (fp, "node%lx := ",
-    (unsigned long) f / (unsigned long) sizeof(DdNode));
+    (uintptr_t) f / (uintptr_t) sizeof(DdNode));
 #else
   retValue = fprintf (fp, "node%x := ",
     (unsigned) f / (unsigned) sizeof(DdNode));
@@ -1596,7 +1596,7 @@ DddmpCuddDdArrayStoreSmvStep (
 
 #if SIZEOF_VOID_P == 8
   retValue = fprintf (fp, "& node%lx | ",
-    (unsigned long) T / (unsigned long) sizeof(DdNode));
+    (uintptr_t) T / (uintptr_t) sizeof(DdNode));
 #else
   retValue = fprintf (fp, "& node%x | ",
     (unsigned) T / (unsigned) sizeof(DdNode));
@@ -1617,10 +1617,10 @@ DddmpCuddDdArrayStoreSmvStep (
 #if SIZEOF_VOID_P == 8
   if (Cudd_IsComplement(cuddE(f))) {
     retValue = fprintf (fp, "& !node%lx\n",
-      (unsigned long) E / (unsigned long) sizeof(DdNode));
+      (uintptr_t) E / (uintptr_t) sizeof(DdNode));
   } else {
     retValue = fprintf (fp, "& node%lx\n",
-      (unsigned long) E / (unsigned long) sizeof(DdNode));
+      (uintptr_t) E / (uintptr_t) sizeof(DdNode));
   }
 #else
   if (Cudd_IsComplement(cuddE(f))) {

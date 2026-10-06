@@ -899,9 +899,9 @@ DddmpPrintBddAndNextRecur (
   fPtr = Cudd_Regular (f);
   
   if (Cudd_IsComplement (f)) {
-    fprintf (stdout, "sign=- ptr=%ld ", ((long int) fPtr));
+    fprintf (stdout, "sign=- ptr=%ld ", ((long int) (intptr_t) fPtr));
   } else {
-    fprintf (stdout, "sign=+ ptr=%ld ", ((long int) fPtr));
+    fprintf (stdout, "sign=+ ptr=%ld ", ((long int) (intptr_t) fPtr));
   }
  
   if (cuddIsConstant (fPtr)) {
@@ -912,7 +912,7 @@ DddmpPrintBddAndNextRecur (
 
   fprintf (stdout,  
     "thenPtr=%ld elsePtr=%ld BddId=%d CnfId=%d Visited=%d\n",
-    ((long int) cuddT (fPtr)), ((long int) cuddE (fPtr)),
+    ((long int) (intptr_t) cuddT (fPtr)), ((long int) (intptr_t) cuddE (fPtr)),
     fPtr->index, DddmpReadNodeIndexCnf (fPtr),
     DddmpVisitedCnf (fPtr));
   

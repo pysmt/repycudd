@@ -214,7 +214,7 @@ Cudd_DebugCheck(
 			count = 1;
 		    }
 		    if (st_insert(edgeTable,(char *)cuddT(f),
-		    (char *)(long)count) == ST_OUT_OF_MEM) {
+		    (char *)(intptr_t)count) == ST_OUT_OF_MEM) {
 			st_free_table(edgeTable);
 			return(CUDD_OUT_OF_MEM);
 		    }
@@ -229,7 +229,7 @@ Cudd_DebugCheck(
 			count = 1;
 		    }
 		    if (st_insert(edgeTable,(char *)Cudd_Regular(cuddE(f)),
-		    (char *)(long)count) == ST_OUT_OF_MEM) {
+		    (char *)(intptr_t)count) == ST_OUT_OF_MEM) {
 			st_free_table(edgeTable);
 			return(CUDD_OUT_OF_MEM);
 		    }
@@ -320,7 +320,7 @@ Cudd_DebugCheck(
 			count = 1;
 		    }
 		    if (st_insert(edgeTable,(char *)cuddT(f),
-		    (char *)(long)count) == ST_OUT_OF_MEM) {
+		    (char *)(intptr_t)count) == ST_OUT_OF_MEM) {
 			st_free_table(edgeTable);
 			return(CUDD_OUT_OF_MEM);
 		    }
@@ -334,7 +334,7 @@ Cudd_DebugCheck(
 			count = 1;
 		    }
 		    if (st_insert(edgeTable,(char *)cuddE(f),
-		    (char *)(long)count) == ST_OUT_OF_MEM) {
+		    (char *)(intptr_t)count) == ST_OUT_OF_MEM) {
 			st_free_table(edgeTable);
 			table->errorCode = CUDD_MEMORY_OUT;
 			return(CUDD_OUT_OF_MEM);
