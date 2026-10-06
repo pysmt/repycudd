@@ -399,12 +399,12 @@ Cudd_DumpDot(
     */
 
     /* Find the bits that are different. */
-    refAddr = (long) Cudd_Regular(f[0]);
+    refAddr = (intptr_t) Cudd_Regular(f[0]);
     diff = 0;
     gen = st_init_gen(visited);
     if (gen == NULL) goto failure;
     while (st_gen(gen, &scan, NULL)) {
-	diff |= refAddr ^ (long) scan;
+	diff |= refAddr ^ (intptr_t) scan;
     }
     st_free_gen(gen); gen = NULL;
 

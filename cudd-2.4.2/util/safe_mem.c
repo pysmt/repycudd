@@ -25,9 +25,9 @@
 extern "C" {
 #endif
 
-extern char *MMalloc(long);
+extern char *MMalloc(size_t);
 extern void MMout_of_memory(long);
-extern char *MMrealloc(char *, long);
+extern char *MMrealloc(char *, size_t);
 
 void (*MMoutOfMemory)(long) = MMout_of_memory;
 
@@ -48,19 +48,19 @@ MMout_of_memory(long size)
 
 
 char *
-MMalloc(long size)
+MMalloc(size_t size)
 {
     char *p;
 
 #ifdef IBMPC
     if (size > 65000L) {
-	if (MMoutOfMemory != (void (*)(long)) 0 ) (*MMoutOfMemory)(size);
+	if (MMoutOfMemory != (void (*)(long)) 0 ) (*MMoutOfMemory)((long) size);
 	return NIL(char);
     }
 #endif
     if (size == 0) size = sizeof(long);
-    if ((p = (char *) malloc((unsigned long) size)) == NIL(char)) {
-	if (MMoutOfMemory != 0 ) (*MMoutOfMemory)(size);
+    if ((p = (char *) malloc(size)) == NIL(char)) {
+	if (MMoutOfMemory != 0 ) (*MMoutOfMemory)((long) size);
 	return NIL(char);
     }
     return p;
@@ -68,20 +68,20 @@ MMalloc(long size)
 
 
 char *
-MMrealloc(char *obj, long size)
+MMrealloc(char *obj, size_t size)
 {
     char *p;
 
 #ifdef IBMPC
     if (size > 65000L) {
-	if (MMoutOfMemory != 0 ) (*MMoutOfMemory)(size);
+	if (MMoutOfMemory != 0 ) (*MMoutOfMemory)((long) size);
 	return NIL(char);
     }
 #endif
     if (obj == NIL(char)) return MMalloc(size);
-    if (size <= 0) size = sizeof(long);
-    if ((p = (char *) realloc(obj, (unsigned long) size)) == NIL(char)) {
-	if (MMoutOfMemory != 0 ) (*MMoutOfMemory)(size);
+    if (size == 0) size = sizeof(long);
+    if ((p = (char *) realloc(obj, size)) == NIL(char)) {
+	if (MMoutOfMemory != 0 ) (*MMoutOfMemory)((long) size);
 	return NIL(char);
     }
     return p;

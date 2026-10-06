@@ -46,7 +46,7 @@ static char rcsid[] UTIL_UNUSED = " $Id: st.c,v 1.11 2004/02/11 22:31:59 fabio E
 
 #define ST_NUMCMP(x,y) ((x) != (y))
 
-#define ST_NUMHASH(x,size) (ABS((long)x)%(size))
+#define ST_NUMHASH(x,size) (ABS((intptr_t)x)%(size))
 
 #if SIZEOF_VOID_P == 8
 #define st_shift 3
@@ -54,7 +54,7 @@ static char rcsid[] UTIL_UNUSED = " $Id: st.c,v 1.11 2004/02/11 22:31:59 fabio E
 #define st_shift 2
 #endif
 
-#define ST_PTRHASH(x,size) ((unsigned int)((unsigned long)(x)>>st_shift)%size)
+#define ST_PTRHASH(x,size) ((unsigned int)((uintptr_t)(x)>>st_shift)%size)
 
 #define EQUAL(func, x, y) \
     ((((func) == st_numcmp) || ((func) == st_ptrcmp)) ?\
@@ -332,7 +332,7 @@ st_lookup_int(st_table *table, void *key, int *value)
 	return 0;
     } else {
 	if (value != NIL(int)) {
-	    *value = (int) (long) ptr->record;
+	    *value = (int) (intptr_t) ptr->record;
 	}
 	return 1;
     }
@@ -687,7 +687,7 @@ st_delete_int(st_table *table, void *keyp, int *value)
     }
 
     *last = ptr->next;
-    if (value != NIL(int)) *value = (int) (long) ptr->record;
+    if (value != NIL(int)) *value = (int) (intptr_t) ptr->record;
     *(char **)keyp = ptr->key;
     FREE(ptr);
     table->num_entries--;
@@ -969,7 +969,7 @@ st_gen_int(st_generator *gen, void *key_p, int *value_p)
     }
     *(char **)key_p = gen->entry->key;
     if (value_p != NIL(int)) {
-   	*value_p = (int) (long) gen->entry->record;
+   	*value_p = (int) (intptr_t) gen->entry->record;
     }
     gen->entry = gen->entry->next;
     return 1;

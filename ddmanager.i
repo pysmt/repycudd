@@ -169,11 +169,11 @@ cerr << "Quitting manager" << endl;
 
   // This takes a long int representing the address of a DdNode and
   // derefs it. Use with caution!!
-  void KillNode(long int num) {
+  void KillNode(long long num) {
 #ifdef PYCUDD_DEBUG
     cerr << "Derefing " << hex << num << endl;
 #endif
-    Cudd_RecursiveDeref(self, (DdNode *) num);
+    Cudd_RecursiveDeref(self, (DdNode *)(intptr_t) num);
   }
 
   /* CUDD Manager functions */

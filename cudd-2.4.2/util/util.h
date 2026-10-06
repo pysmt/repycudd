@@ -29,17 +29,17 @@ extern "C" {
 #define SIZEOF_LONG 4
 #endif
 
-#if SIZEOF_VOID_P == 8 && SIZEOF_INT == 4
-typedef long util_ptrint;
-#else
-typedef int util_ptrint;
-#endif
+#include <stdint.h>
+/* intptr_t, not long: long is 32 bits on Win64 (LLP64). */
+typedef intptr_t util_ptrint;
 
 /* #define USE_MM */		/* choose libmm.a as the memory allocator */
 
 /* these are too entrenched to get away with changing the name */
 #define strsav		util_strsav
+#ifndef _WIN32
 #include <unistd.h>
+#endif
 extern char *optarg;
 extern int optind, opterr;
 
@@ -76,9 +76,9 @@ extern int optind, opterr;
  *	- when in doubt, delete the '#define USE_MM' above
  */
 #define ALLOC(type, num)	\
-    ((type *) MMalloc((long) sizeof(type) * (long) (num)))
+    ((type *) MMalloc(sizeof(type) * (size_t) (num)))
 #define REALLOC(type, obj, num)	\
-    ((type *) MMrealloc((char *) (obj), (long) sizeof(type) * (long) (num)))
+    ((type *) MMrealloc((char *) (obj), sizeof(type) * (size_t) (num)))
 #define FREE(obj)		\
     ((obj) ? (free((char *) (obj)), (obj) = 0) : 0)
 #endif
@@ -179,10 +179,10 @@ extern int memcmp(), strcmp();
 
 
 #ifndef USE_MM
-extern char *MMalloc (long);
+extern char *MMalloc (size_t);
 extern void MMout_of_memory (long);
 extern void (*MMoutOfMemory) (long);
-extern char *MMrealloc (char *, long);
+extern char *MMrealloc (char *, size_t);
 #endif
 
 extern long util_cpu_time (void);

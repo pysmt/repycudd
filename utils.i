@@ -20,11 +20,11 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
   int chk;
   int i;
   o2 = dest;
-  chk = (int) PyInt_AsLong(o2);
+  chk = (int) PyLong_AsLong(o2);
   if (chk) {
     result = PyTuple_New(sz+1);
     PyTuple_SetItem(result,0,o2);
-    for (i=0;i<sz;i++) PyTuple_SetItem(result,i+1,PyInt_FromLong((*src)[i]));
+    for (i=0;i<sz;i++) PyTuple_SetItem(result,i+1,PyLong_FromLong((*src)[i]));
     // Note that DdGen will free the memory allocated for the int array
   }
   else {
@@ -57,7 +57,7 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
 #endif
 
   int sz = Cudd_ReadSize($1);
-  int chk = (int) PyInt_AsLong($result);
+  int chk = (int) PyLong_AsLong($result);
   $result = array_to_tuple($result, $2, sz);
   if (chk) FREE(*$2);
 }
@@ -140,7 +140,7 @@ static PyObject * array_to_tuple(PyObject *dest, int **src, int sz) {
   using_map("dum_juncts")
 #endif
 
-  num_nds = (int) PyInt_AsLong($result);
+  num_nds = (int) PyLong_AsLong($result);
   if (num_nds == 1) {
     o = SWIG_NewPointerObj(**$1,$descriptor(DdNode *),0);
     o2 = $result;

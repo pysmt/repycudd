@@ -99,11 +99,11 @@ __doc__ = "This class wraps around the basic DdNode. The methods defined by this
 
   /* Added to DdNode */
   int __hash__ () {
-    return (long int)(self);
+    return (int)(intptr_t)(self);
   }
 
   int __int__ () {
-    return (long int)(self);
+    return (int)(intptr_t)(self);
   }
 
 

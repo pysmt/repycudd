@@ -606,11 +606,11 @@ Cudd_zddDumpDot(
     */
 
     /* Find the bits that are different. */
-    refAddr = (long) f[0];
+    refAddr = (intptr_t) f[0];
     diff = 0;
     gen = st_init_gen(visited);
     while (st_gen(gen, &scan, NULL)) {
-	diff |= refAddr ^ (long) scan;
+	diff |= refAddr ^ (intptr_t) scan;
     }
     st_free_gen(gen);
 
