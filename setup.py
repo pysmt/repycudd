@@ -2,6 +2,7 @@ import ctypes
 import os
 import struct
 import sys
+import sysconfig
 from glob import glob
 
 from setuptools import Extension, setup
@@ -35,6 +36,13 @@ if sys.platform == "win32":
 else:
     extra_compile_args = ["-w"]  # ponytail: CUDD is noisy and we do not maintain it
 
+# One abi3 wheel per platform serves every CPython from 3.9 on (needs SWIG >= 4.2).
+# PyPy and free-threaded CPython do not support the limited API.
+limited_api = sys.implementation.name == "cpython" and not sysconfig.get_config_var(
+    "Py_GIL_DISABLED")
+if limited_api:
+    define_macros += [("Py_LIMITED_API", "0x03090000")]
+
 
 class BuildPyAfterExt(build_py):
     # SWIG writes repycudd.py during build_ext, which normally runs after build_py.
@@ -53,6 +61,8 @@ setup(
         extra_compile_args=extra_compile_args,
         swig_opts=["-c++"],
         language="c++",
+        py_limited_api=limited_api,
     )],
     cmdclass={"build_py": BuildPyAfterExt},
+    options={"bdist_wheel": {"py_limited_api": "cp39"}} if limited_api else {},
 )

@@ -1,25 +1,34 @@
 INSTALLING REPYCUDD
 -------------------
 
-repycudd builds with pip on Linux and 64-bit Windows (CI covers both). CUDD 3.0.0 is
-vendored in cudd-3.0.0/ and linked statically into the extension, so there is
-nothing else to install.
+PyPI has wheels for Linux, macOS and 64-bit Windows, so usually
+
+    python -m pip install repycudd
+
+is all you need. The rest of this file is about building from source.
+
+repycudd builds with pip on Linux, macOS and 64-bit Windows (CI covers all
+three). CUDD 3.0.0 is vendored in cudd-3.0.0/ and linked statically into the
+extension, so there is nothing else to install.
 
 Requirements:
-  - Python 3.8 or later, with pip.
-  - A C/C++ compiler: gcc or clang on Linux, Microsoft Visual C++ 14.0
-    or later on Windows ("Build Tools for Visual Studio", C++ workload).
-  - SWIG >= 4.0.2. pip fetches it from PyPI automatically.
+  - Python 3.9 or later, with pip.
+  - A C/C++ compiler: gcc or clang on Linux and macOS, Microsoft Visual C++
+    14.0 or later on Windows ("Build Tools for Visual Studio", C++ workload).
+  - SWIG >= 4.2. pip fetches it from PyPI automatically.
 
 Install into the current environment:
 
     python -m pip install .
 
-Or into a plain directory, which is what pysmt's installer does:
+Or into a plain directory:
 
     python -m pip install --no-deps --target <dir> .
 
 and then put <dir> on PYTHONPATH.
+
+On CPython (except the free-threaded builds) the extension uses the stable
+ABI, so the same build works on every CPython from 3.9 on.
 
 The CUDD sources carry local patches so that pointers are never stored in a
 `long`, which is 32 bits on 64-bit Windows.

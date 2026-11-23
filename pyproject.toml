@@ -1,11 +1,39 @@
 [build-system]
-# swig 4.0.0 and 4.0.1 produce broken bindings for this module.
-requires = ["setuptools>=61", "swig>=4.0.2"]
+# setuptools 77 reads the SPDX license fields; SWIG 4.2 added the Python limited API support.
+requires = ["setuptools>=77", "swig>=4.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "repycudd"
-version = "3.0.1"
+version = "3.1.0"
 description = "Python bindings for the CUDD 3.0.0 decision diagram package"
-license = { text = "BSD-3-Clause" }
-requires-python = ">=3.8"
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE", "cudd-3.0.0/LICENSE"]
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: C",
+    "Programming Language :: C++",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.urls]
+Homepage = "https://github.com/pysmt/repycudd"
+Issues = "https://github.com/pysmt/repycudd/issues"
+
+[tool.cibuildwheel]
+# setup.py builds one abi3 wheel with the oldest CPython, then cibuildwheel tests it on the others
+build = "cp3*"
+# Free-threaded CPython has no limited API (it builds from the sdist), and musllinux is not needed yet
+skip = ["cp3??t-*", "*-musllinux_*"]
+test-sources = ["test_smoke.py", "pyproject.toml", "examples"]
+test-command = "python test_smoke.py && python examples/example1.py && python examples/example2.py"
+
+[tool.cibuildwheel.linux]
+# glibc then mmaps every allocation, so CUDD nodes live above 4 GB and a pointer truncated to 32 bits crashes the smoke test
+test-environment = { MALLOC_MMAP_THRESHOLD_ = "0" }
+
+[tool.cibuildwheel.windows]
+archs = ["AMD64"]
