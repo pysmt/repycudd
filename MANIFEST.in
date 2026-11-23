@@ -1,0 +1,4 @@
+# setup.py lists only the compiled sources, but SWIG and the compiler also need these
+include *.i *.h INSTALL README test_smoke.py
+recursive-include examples *.py
+recursive-include cudd-3.0.0 *.h

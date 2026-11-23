@@ -7,8 +7,18 @@ The main purpose of this fork is to provide pySMT (www.pysmt.org) a re-entrant w
 
 Take a look at examples/ to see how to use the wrapper. For a higher level interface for using BDDs, consider using pySMT.
 
-## Building
+## Installation
+
+    pip install repycudd
+
+PyPI has wheels for Linux (x86_64 and aarch64), macOS (x86_64 and arm64) and Windows (x86_64), for CPython 3.9 and later. CUDD 3.0.0 is linked statically into the extension, so there is nothing else to install.
+
+## Building from source
 
     python -m pip install .
 
-This works on Linux and 64-bit Windows; see INSTALL for the compiler requirements. SWIG comes from PyPI as a build dependency.
+This needs a C/C++ compiler; see INSTALL for the details. SWIG comes from PyPI as a build dependency.
+
+## Releasing
+
+Set the new version in `pyproject.toml` and in `docstring.h` (`test_smoke.py` checks that they match), merge to master, then push a `vX.Y.Z` tag. The `wheels` workflow builds and tests the sdist and the wheels, uploads them to PyPI and creates the GitHub release.
